@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+@mixin d-flex($para1, $para2, $para3, $para4) {
+  display: $para1;
+  flex-direction: $para2;
+  align-items: $para3;
+  justify-content: $para4;
+}
+
+@mixin box-model($para1, $para2, $para3, $para4, $para5, $para6) {
+  width: $para1;
+  height: $para2;
+  margin: $para3;
+  padding: $para4;
+  border: $para5;
+  border-radius: $para6;
+}
+
+@mixin b-shadow($para1, $para2, $para3, $para4) {
+  box-shadow:
+    $para1 -2px -2px 12px rgba(255, 255, 255,1),
+    $para2 -2px -2px 8px rgba(255, 255, 255,0.5),
+    $para3 2px -2px 12px rgba(255, 255, 255, 0.5),
+    $para4 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include d-flex(flex, column, center, null);
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  padding: 0 20px;
+  /* background-image: url('./img/anete-lusina-2JknzBYDu6k-unsplash.jpg'); */
+  background: {
+    color: #f2f3f7;
+    repeat: no-repeat;
+    size: cover;
+    position: center
+  };
+  i {
+    pointer-events: none;
+  }
+  h1 {
+    color: #3e3e3e;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+}
+
+// btn class
+.btn {
+  @include b-shadow(null, null, inset, null);
+  @include box-model(null, null, 0 0 0 15px, 10px 15px, 0, 50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #3e3e3e;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  &.btn-submit {
+    position: absolute;
+    padding: 15px 20px;
+    top: 48%;
+    right: 31%;
+    transform: translate(-50%, -50%);
+    @media (max-width: 600px) {
+      padding: 15px 20px;
+      top: 20%;
+      right: -8%;
+    }
+  }
+  &:hover {
+    @include b-shadow(inset, inset, inset, inset)
+  }
+}
+
+// alert msg class
+.alert-msg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 2px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color:#fff;
+  transform: translateY(-80px);
+  transition: all .5s linear;
+  &.show {
+    transform: translateY(0px);
+  }
+}
+
+// hide class
+.hide {
+  display: none;
+}
+
+// dark mode class
+.darkmode--activated {
+  p, input, select {
+    color: #fff;
+  }
+  .alert-msg {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+header {
+  @include d-flex(flex, column, center, center);
+  width: 100%;
+  height: 40vh;
+  .todo-form {
+    margin-top: 40px;
+    position: relative;
+    select {
+      @include b-shadow(null, null, inset, null);
+      @include box-model(200px, null, 0 0 0 15px, 15px 20px, 0, 40px);
+      cursor: pointer;
+      font-size: 18px;
+      color: #3e3e3e;
+      backdrop-filter: blur(10px);
+      background: url('../img/keyboard-down-arrow.png') no-repeat 90% center;
+      background-color: rgba(255, 255, 255, 0.3);
+      appearance: none;
+      &:focus {
+        @include b-shadow(inset, inset, inset, inset);
+        outline: 0;
+      }
+      @media (max-width: 600px) {
+        @include box-model(400px, null,  20px 0 0 0, null, null, null)
+      }
+    }
+    .todo-input {
+      @include b-shadow(null, null, inset, null);
+      @include box-model(400px, null, null, 15px 20px, 0, 40px);
+      letter-spacing: 2px;
+      font-size: 18px;
+      background-color: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      &:focus {
+        @include b-shadow(inset, inset, inset, inset);
+        outline: 0;
+      }
+    }
+    @media (max-width: 600px) {
+      @include d-flex(flex, column, null, center)
+    }
+  }
+}
+
+.todo-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  .todo-card {
+    @include d-flex(flex, column, center, space-between);
+    @include box-model(300px, 250px, null, 20px, 0, 30px);
+    @include b-shadow(null, null, inset, null);
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    &.completed p {
+      text-decoration: line-through;
+    }
+    .todo-title {
+      text-transform: uppercase;
+      font-size: 24px;
+      width: 100%;
+      padding: 5px 8px;
+      /* border-bottom: 10px double; */
+      color: #0080FF;
+    }
+    .todo-content {
+      font-size: 18px;
+      max-width: 200px;
+      overflow:hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .edit-input {
+      @include b-shadow(null, null, inset, null);
+      @include box-model(null, null, null, 8px 12px, 0, 40px);
+      background-color: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      &:focus {
+        @include b-shadow(inset, inset, inset, inset);
+        outline: 0;
+      }
+    }
+    .todo-footer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  @media(max-width: 1200px){
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media(max-width: 900px){
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media(max-width: 600px){
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
